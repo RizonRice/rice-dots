@@ -89,6 +89,15 @@ set directory=~/.vim/swaps
 
 colorscheme noctu
 
+" integrate with ag and ack
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
+  set grepformat=%f:%l:%c:%m
+elseif executable('ack')
+  set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
+  set grepformat=%f:%l:%c:%m
+endif
+
 " vim doesn't play nice with fish 
 if &shell =~# 'fish$'
   set shell=/bin/bash
