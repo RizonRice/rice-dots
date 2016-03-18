@@ -73,6 +73,7 @@ set incsearch
 set laststatus=1
 set nowrap
 set showmode
+set magic                         " more sane regex
 set showcmd
 set foldmethod=marker foldtext=MyFoldText()
 set ruler rulerformat=%32(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
@@ -91,6 +92,15 @@ set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 
 colorscheme noctu
+
+" integrate with ag and ack
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
+  set grepformat=%f:%l:%c:%m
+elseif executable('ack')
+  set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
+  set grepformat=%f:%l:%c:%m
+endif
 
 " vim doesn't play nice with fish
 if &shell =~# 'fish$'
