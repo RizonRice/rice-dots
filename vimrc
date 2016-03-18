@@ -10,17 +10,17 @@ let g:mapleader = "\<Space>"
 " push `K` with cursor on a setting to find more info about it
 
 " {{{ plugins
-let s:configdir = '.vim'
-if has('nvim') | let s:configdir = '.config/nvim' | endif
+let s:configdir = '~/.vim'
+if has('nvim') | let s:configdir = '~/$XDG_CONFIG_HOME/nvim' | endif
 
-if empty(glob('~/' . s:configdir . '/autoload/plug.vim'))
-  silent call system('mkdir -p ~/' . s:configdir . '/{autoload,bundle,cache,undo,backups,swaps}')
-  silent call system('curl -fLo ~/' . s:configdir . '/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-  execute 'source  ~/' . s:configdir . '/autoload/plug.vim'
+if empty(glob(s:configdir . '/autoload/plug.vim'))
+  silent call system('mkdir -p ' . s:configdir . '/{autoload,bundle,cache,undo,backups,swaps}')
+  silent call system('curl -fLo ' . s:configdir . '/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+  execute 'source  ' . s:configdir . '/autoload/plug.vim'
   autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin('~/' . s:configdir . '/bundle')
+call plug#begin(s:configdir . '/bundle')
 Plug 'tpope/vim-unimpaired'            " change buffers with `[b` or `]b`. push K with cursor inside 'unimpaired' for more help
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
