@@ -1,0 +1,6 @@
+if [[ -z "$SSH_CONNECTION" ]]; then
+  if [[ -z "$DISPLAY" && "$TTY" == '/dev/tty1' ]]; then
+    exec startx
+  fi
+# else; do some defaults for ssh, ie `tmux attach`
+fi
