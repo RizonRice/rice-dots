@@ -102,7 +102,6 @@ elseif executable('ack')
   set grepformat=%f:%l:%c:%m
 endif
 
-" vim doesn't play nice with fish
 if &shell =~# 'fish$'
   set shell=/bin/bash
 endif
