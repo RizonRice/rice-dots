@@ -5,7 +5,7 @@ let g:mapleader = "\<Space>"
 " open all folds with `zR`
 " close all folds with `zM`
 " run `:help fold` for more fold binds
-" delete this when you've memorized those binds
+" feel free to delete this when you've memorized those binds
 
 " push `K` with cursor on a setting to find more info about it
 
@@ -21,10 +21,24 @@ if empty(glob('~/' . s:configdir . '/autoload/plug.vim'))
 endif
 
 call plug#begin('~/' . s:configdir . '/bundle')
-Plug 'tpope/vim-unimpaired'            " change buffers with `[b` or `]b` push K with cursor in unimpaired for more help
+Plug 'tpope/vim-unimpaired'            " change buffers with `[b` or `]b`. push K with cursor inside 'unimpaired' for more help
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'            " use gcc to uncomment lines or folds
+Plug 'tpope/vim-commentary'            " use gcc to toggle commenting lines or folds
+Plug 'chilicuil/vim-sprunge' " {{{
+  " uncomment the line below to use `ix.io`
+  " let g:sprunge_cmd = 'curl -s -n -F "f:1=<-" http://ix.io'
+" }}}
+Plug 'noahfrederick/vim-noctu'
+
+" some suggested plugins to try
+" make sure to run `:PlugInstall` when you add new plugins
+
+" Plug 'tpope/vim-surround'
+" Plug 'wellle/targets.vim'
+" Plug 'kana/vim-textobj-user'
+" Plug 'thinca/vim-textobj-between'
+" Plug 'Raimondi/delimitMate'
 " Plug 'justinmk/vim-sneak' " {{{      " enable f/F/t/T/;/, to work across lines
 "   map <silent> f <Plug>Sneak_f
 "   map <silent> F <Plug>Sneak_F
@@ -40,20 +54,6 @@ Plug 'tpope/vim-commentary'            " use gcc to uncomment lines or folds
 "     \ guifg=black guibg=yellow ctermfg=black ctermbg=yellow
 "   augroup END
 " " }}}
-Plug 'chilicuil/vim-sprunge' " {{{
-  " uncomment the line below to use `ix.io`
-  " let g:sprunge_cmd = 'curl -s -n -F "f:1=<-" http://ix.io'
-" }}}
-Plug 'noahfrederick/vim-noctu'
-
-" some suggested plugins to try
-" make sure to run `:PlugInstall` when you add new plugins
-
-Plug 'tpope/vim-surround'
-" Plug 'wellle/targets.vim'
-" Plug 'kana/vim-textobj-user'
-" Plug 'thinca/vim-textobj-between'
-" Plug 'Raimondi/delimitMate'
 call plug#end()
 " }}}
 
@@ -70,13 +70,12 @@ set ttimeoutlen=100
 set incsearch
 set laststatus=1
 set nowrap
-" set wrap linebreak
 set showmode
 set showcmd
 set foldmethod=marker foldtext=MyFoldText()
 set ruler rulerformat=%32(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 execute 'set fillchars=stl:\ ,stlnc:\ ,vert:\ ,fold:\ ,diff:\ '
-set list listchars=tab:\›\ ,trail:★,extends:»,precedes:«,nbsp:•
+set list listchars=tab:\›\ ,trail:★,extends:»,precedes:«,nbsp:•        " toggle lith `col`
 set wildmenu
 set lazyredraw
 set autoread
@@ -104,7 +103,7 @@ nnoremap Y y$
 " list buffers with <Space>b and prompt to switch buffers
 exec 'nnoremap <leader>b <Esc>:ls<CR>:b '
 
-" when searching with n or N open folds and center the line
+" when searching with n or N, open folds and center the line
 nnoremap n nzvzz
 nnoremap N Nzvzz
 
@@ -114,7 +113,7 @@ nnoremap N Nzvzz
 augroup VIM
   autocmd!
 
-  " enable wor-wrap and spell-check for text and markdown files
+  " enable word-wrap and spell-check for text and markdown files
   autocmd FileType markdown,text
   \ setlocal nolist spell wrap linebreak
 
