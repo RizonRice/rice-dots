@@ -5,9 +5,8 @@ let g:mapleader = "\<Space>"
 " open all folds with `zR`
 " close all folds with `zM`
 " run `:help fold` for more fold binds
-" feel free to delete this when you've memorized those binds
-
 " push `K` with cursor on a setting to find more info about it
+" feel free to delete this once memorized
 
 " {{{ plugins
 let s:configdir = '~/.vim'
@@ -21,10 +20,10 @@ if empty(glob(s:configdir . '/autoload/plug.vim'))
 endif
 
 call plug#begin(s:configdir . '/bundle')
-Plug 'tpope/vim-unimpaired'            " change buffers with `[b` or `]b`. push K with cursor inside 'unimpaired' for more help
+Plug 'tpope/vim-unimpaired'                   " change buffers with `[b` or `]b`. push K with cursor inside 'unimpaired' for more help
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'            " use gcc to toggle commenting lines or folds
+Plug 'tpope/vim-commentary'                   " use gcc to toggle commenting lines or folds
 Plug 'chilicuil/vim-sprunge' " {{{
   " uncomment the line below to use `ix.io`
   " let g:sprunge_cmd = 'curl -s -n -F "f:1=<-" http://ix.io'
@@ -33,13 +32,16 @@ Plug 'noahfrederick/vim-noctu'
 
 " some suggested plugins to try
 " make sure to run `:PlugInstall` when you add new plugins
-
 " Plug 'tpope/vim-surround'
 " Plug 'wellle/targets.vim'
 " Plug 'kana/vim-textobj-user'
 " Plug 'thinca/vim-textobj-between'
 " Plug 'Raimondi/delimitMate'
-" Plug 'justinmk/vim-sneak' " {{{      " enable f/F/t/T/;/, to work across lines
+" Plug 'jeetsukumaran/vim-filebeagle' " {{{   " mini file-explorer
+"   let g:filebeagle_suppress_keymaps = 1
+"   map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
+" " }}}
+" Plug 'justinmk/vim-sneak' " {{{             " enable f/F/t/T/;/, to work across lines
 "   map <silent> f <Plug>Sneak_f
 "   map <silent> F <Plug>Sneak_F
 "   map <silent> t <Plug>Sneak_t
@@ -59,8 +61,8 @@ call plug#end()
 
 " {{{ general settings
 set hidden
-set number                 " unimpaired lets you toggle this with `con`
-set relativenumber         " unimpaired lets you toggle this with `cor`
+set number                        " unimpaired lets you toggle this with `con`
+set relativenumber                " unimpaired lets you toggle this with `cor`
 set autoindent
 set backspace=indent,eol,start
 set smarttab
@@ -75,7 +77,8 @@ set showcmd
 set foldmethod=marker foldtext=MyFoldText()
 set ruler rulerformat=%32(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 execute 'set fillchars=stl:\ ,stlnc:\ ,vert:\ ,fold:\ ,diff:\ '
-set list listchars=tab:\›\ ,trail:★,extends:»,precedes:«,nbsp:•        " toggle lith `col`
+set list                          " toggle lith `col`
+set listchars=tab:\›\ ,trail:★,extends:»,precedes:«,nbsp:•
 set wildmenu
 set lazyredraw
 set autoread
@@ -89,7 +92,7 @@ set directory=~/.vim/swaps
 
 colorscheme noctu
 
-" vim doesn't play nice with fish 
+" vim doesn't play nice with fish
 if &shell =~# 'fish$'
   set shell=/bin/bash
 endif
@@ -120,7 +123,7 @@ augroup VIM
   " source vimrc when working on it
   autocmd BufWritePost *vimrc
   \ source %
-  
+
   " make K open :help on the file under cursor
   autocmd FileType vim
   \ set keywordprg=:help
@@ -129,7 +132,7 @@ augroup VIM
   autocmd BufEnter *
   \ if &buftype != '' |
   \   setlocal nolist nospell nocursorcolumn nocursorline colorcolumn=0 |
-  \   nnoremap <silent><buffer> q <Esc>:bd<CR> | 
+  \   nnoremap <silent><buffer> q <Esc>:bd<CR> |
   \ endif
 
  " push help windows to the right and makes them 80 chars wide
