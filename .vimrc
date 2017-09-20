@@ -1,12 +1,12 @@
 filetype plugin indent on
 let g:mapleader = "\<Space>"
 
-" toggle fold under cursor with `za`
-" open all folds with `zR`
-" close all folds with `zM`
+" K should show help of word under cursor
+" toggle fold under cursor with `za`/`zA`
+" increase/decrease fold level with `zr`/`zm`
+" toggle all folds with `zR`/`zM`
 " run `:help fold` for more fold binds
-" push `K` with cursor on a setting to find more info about it
-" feel free to delete this once memorized
+" search help files with :helpgrep
 
 " {{{ plugins
 let s:configdir = '~/.vim'
@@ -16,32 +16,38 @@ if empty(glob(s:configdir . '/autoload/plug.vim'))
   silent call system('mkdir -p ' . s:configdir . '/{autoload,bundle,cache,undo,backups,swaps}')
   silent call system('curl -fLo ' . s:configdir . '/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
   execute 'source  ' . s:configdir . '/autoload/plug.vim'
-  autocmd VimEnter * PlugInstall
 endif
 
+" make sure your terminal supports clickable links
 call plug#begin(s:configdir . '/bundle')
-Plug 'tpope/vim-unimpaired'                   " change buffers with `[b` or `]b`. push K with cursor inside 'unimpaired' for more help
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'                   " use gcc to toggle commenting lines or folds
-Plug 'chilicuil/vim-sprunge' " {{{
-  " uncomment the line below to use `ix.io`
-  " let g:sprunge_cmd = 'curl -s -n -F "f:1=<-" http://ix.io'
+Plug 'https://github.com/tpope/vim-unimpaired'                   " lots of extra bindings. push K with cursor on 'unimpaired'
+Plug 'https://github.com/jiangmiao/auto-pairs'                   " adds matching chars
+Plug 'https://github.com/tpope/vim-endwise'                      " adds matching words
+Plug 'https://github.com/tpope/vim-repeat'                       " makes `.` better
+Plug 'https://github.com/tpope/vim-commentary'                   " use `gcc` or `gc<motion>` to toggle commenting lines or folds
+Plug 'https://github.com/tpope/vim-fugitive' " {{{                 git commands
+  nnoremap <Leader>gs <Esc>:Gstatus<CR>
+  nnoremap <Leader>gd <Esc>:Gdiff<CR>
+  nnoremap <Leader>gc <Esc>:Gcommit<CR>
+  nnoremap <Leader>gb <Esc>:Gblame<CR>
+  nnoremap <Leader>gp <Esc>:Gpush<CR>
 " }}}
-Plug 'noahfrederick/vim-noctu'
+Plug 'https://github.com/chilicuil/vim-sprunge' " {{{              paste with :Sprunge
+  " let g:sprunge_cmd = 'curl -s -n -F "f:1=<-" http://ix.io'    " uncomment with `gcc` to use `ix.io`
+" }}}
+Plug 'https://github.com/noahfrederick/vim-noctu'                " basic terminal styling
 
 " some suggested plugins to try
 " make sure to run `:PlugInstall` when you add new plugins
-" Plug 'tpope/vim-surround'
-" Plug 'wellle/targets.vim'
-" Plug 'kana/vim-textobj-user'
-" Plug 'thinca/vim-textobj-between'
-" Plug 'Raimondi/delimitMate'
-" Plug 'jeetsukumaran/vim-filebeagle' " {{{   " mini file-explorer
+" Plug 'https://github.com/tpope/vim-surround'
+" Plug 'https://github.com/wellle/targets.vim'
+" Plug 'https://github.com/kana/vim-textobj-user'
+" Plug 'https://github.com/thinca/vim-textobj-between'
+" Plug 'https://github.com/jeetsukumaran/vim-filebeagle' " {{{   " mini file-explorer
 "   let g:filebeagle_suppress_keymaps = 1
 "   map <silent> - <Plug>FileBeagleOpenCurrentBufferDir
 " " }}}
-" Plug 'justinmk/vim-sneak' " {{{             " enable f/F/t/T/;/, to work across lines
+" Plug 'https://github.com/justinmk/vim-sneak' " {{{             " enable f/F/t/T/;/, to work across lines
 "   map <silent> f <Plug>Sneak_f
 "   map <silent> F <Plug>Sneak_F
 "   map <silent> t <Plug>Sneak_t
@@ -57,6 +63,7 @@ Plug 'noahfrederick/vim-noctu'
 "   augroup END
 " " }}}
 call plug#end()
+" don't forget to occasionally update plugins with :PlugUpgrade
 " }}}
 
 " {{{ general settings
@@ -86,10 +93,10 @@ set autoread
 set shortmess+=I
 set modeline modelines=2
 set sessionoptions-=options
-set undofile undodir=~/.vim/undo undoreload=1000
+set undofile undodir=~/.vim//undo undoreload=1000
 set undolevels=1000               " make undo persistent
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
+set backupdir=~/.vim//backups
+set directory=~/.vim//swaps
 
 colorscheme noctu
 
@@ -102,6 +109,7 @@ elseif executable('ack')
   set grepformat=%f:%l:%c:%m
 endif
 
+" fish is weird in vim
 if &shell =~# 'fish$'
   set shell=/bin/bash
 endif
@@ -113,7 +121,7 @@ nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR
 nnoremap Y y$
 
 " list buffers with <Space>b and prompt to switch buffers
-exec 'nnoremap <leader>b <Esc>:ls<CR>:b '
+nnoremap <leader>b <Esc>:ls<CR>:b<space>
 
 " when searching with n or N, open folds and center the line
 nnoremap n nzvzz
@@ -130,8 +138,8 @@ augroup VIM
   \ setlocal nolist spell wrap linebreak
 
   " source vimrc when working on it
-  autocmd BufWritePost *vimrc
-  \ source %
+  " autocmd BufWritePost *vimrc
+  " \ source %
 
   " make K open :help on the file under cursor
   autocmd FileType vim
